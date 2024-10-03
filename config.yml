@@ -1,0 +1,55 @@
+version: 1
+build:
+  main: cmd/maestrod
+  binary: "maestrod"
+validation: sovereign
+genesis:
+  chain_id: "maestro-test-1"
+  app_state:
+    crisis:
+      constant_fee:
+        amount: "1000"
+        denom: "umaestro"
+    gov:
+      deposit_params:
+        min_deposit:
+          - amount: "10000000"
+            denom: "umaestro"
+    mint:
+      params:
+        mint_denom: "umaestro"
+    staking:
+      params:
+        bond_denom: "umaestro"
+    interchainquery:
+      params:
+        allow_queries: ["/cosmos.tx.v1beta1.Service/GetTxsEvent"]
+accounts:
+- name: alice
+  coins: ["39000000000000umaestro", "1000000000stake"]
+    # Use a fixed mnemonic as to have a fixed validator consensus key for easier
+    # testing.
+  mnemonic: "entry garbage bike poem grunt negative easily annual miss happy license blur false fringe program picture inner tape dismiss eagle include quality drill master"
+- name: relayer
+  coins: ["5500000000000umaestro", "1000000000stake"]
+  mnemonic: "use glove remain glance twin scout tank seminar purchase mix window illness"
+client:
+  openapi:
+    path: docs/static/openapi.yml
+validators:
+- name: alice
+  bonded: 100000000umaestro
+  app:
+    api:
+      address: :1317
+    grpc:
+      address: :9090
+    grpc-web:
+      address: :9091
+  config:
+    p2p:
+      laddr: :26656
+    rpc:
+      laddr: :26657
+      pprof_laddr: :6060
+  home: $HOME/.maestrod
