@@ -8,3 +8,4 @@ build/
 /heighliner*
 coverage.out
 ts-client
+dist
