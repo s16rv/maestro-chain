@@ -10,9 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read  # allows downloading code from repo
-      packages: read  # needed to access GitHub packages
-      id-token: write  # required for authentication with GitHub Packages (private)
+      contents: read
+      packages: read  # Needed to access private packages
 
     steps:
       - name: Checkout code
@@ -21,12 +20,12 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.21.11'
+          go-version: '1.21.11'  # Adjust to your Go version
 
-      - name: Authenticate with GitHub Packages
+      - name: Set up Git credentials for private modules
         run: |
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" > ~/.npmrc
-          go env -w GOPRIVATE=github.com/s16rv/*  # Replace with your org name
+          git config --global url."https://${{ secrets.GITHUB_TOKEN }}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
+          go env -w GOPRIVATE=github.com/s16rv/*  # Replace with your organization name
 
       - name: Cache Go modules
         uses: actions/cache@v3
@@ -46,4 +45,3 @@ jobs:
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
