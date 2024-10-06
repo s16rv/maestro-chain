@@ -59,6 +59,7 @@ cat $CHAIN_DIR/config/genesis.json | jq '.app_state["staking"]["params"]["max_va
 cat $CHAIN_DIR/config/genesis.json | jq '.app_state["crisis"]["constant_fee"]["denom"]="umaestro"' >$CHAIN_DIR/config/tmp_genesis.json && mv $CHAIN_DIR/config/tmp_genesis.json $CHAIN_DIR/config/genesis.json
 cat $CHAIN_DIR/config/genesis.json | jq '.app_state["gov"]["deposit_params"]["min_deposit"][0]["denom"]="umaestro"' >$CHAIN_DIR/config/tmp_genesis.json && mv $CHAIN_DIR/config/tmp_genesis.json $CHAIN_DIR/config/genesis.json
 cat $CHAIN_DIR/config/genesis.json | jq '.app_state["gov"]["params"]["min_deposit"][0]["denom"]="umaestro"' >$CHAIN_DIR/config/tmp_genesis.json && mv $CHAIN_DIR/config/tmp_genesis.json $CHAIN_DIR/config/genesis.json
+cat $CHAIN_DIR/config/genesis.json | jq '.app_state["gov"]["params"]["voting_period"]="3600s"' >$CHAIN_DIR/config/tmp_genesis.json && mv $CHAIN_DIR/config/tmp_genesis.json $CHAIN_DIR/config/genesis.json
 cat $CHAIN_DIR/config/genesis.json | jq '.app_state["mint"]["params"]["mint_denom"]="umaestro"' >$CHAIN_DIR/config/tmp_genesis.json && mv $CHAIN_DIR/config/tmp_genesis.json $CHAIN_DIR/config/genesis.json
 
 # Update config
